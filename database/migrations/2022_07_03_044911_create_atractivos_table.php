@@ -18,8 +18,8 @@ class CreateAtractivosTable extends Migration
             $table->string('nombre', 50);
             $table->string('codigo', 20);
             $table->string('descripcion', 50000);
-            $table->binary('imagen')->nullable();
-            $table->binary('video')->nullable();
+            $table->string('imagen', 200);
+            $table->string('video', 200);
             $table->string('acompaniantes', 50)->nullable();
             $table->foreignId('tipo_atractivo_id')->nullable()->constrained('tipo_atractivos')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('ubicacion_id')->nullable()->constrained('ubicacions')->cascadeOnUpdate()->cascadeOnDelete();
@@ -27,7 +27,6 @@ class CreateAtractivosTable extends Migration
             $table->foreignId('estacionalidad_id')->nullable()->constrained('estacionalidads')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
             $table->softDeletes();
-
         });
     }
 

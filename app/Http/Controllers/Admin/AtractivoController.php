@@ -10,6 +10,7 @@ use App\Models\Atractivo_Seccion;
 use App\Models\Actividad_Atractivo;
 use App\Models\Atractivo_Empresa;
 use Illuminate\Support\Facades\DB;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class AtractivoController extends Controller
 {
@@ -49,10 +50,7 @@ class AtractivoController extends Controller
                 /* 'accesibilidads.distancia', */
             )->get();
         //Ingreso de imágenes y videos
-        foreach ($atractivos as $atractivo) {
-            $atractivo->imagen = stream_get_contents($atractivo->imagen);
-            $atractivo->video = stream_get_contents($atractivo->video);
-        }
+    
         return $atractivos;
     }
 
@@ -64,11 +62,8 @@ class AtractivoController extends Controller
         atr.acompaniantes, atr.ubicacion_id, atr.accesibilidad_id, atr.estacionalidad_id
         from atractivo_subseccion asub, atractivos atr
         where sub_seccion_id=$id and asub.atractivo_id= atr.id");
-        //Ingreso de imágenes y videos
-        foreach ($atractivos as $atractivo) {
-            $atractivo->imagen = stream_get_contents($atractivo->imagen);
-            $atractivo->video = stream_get_contents($atractivo->video);
-        }
+    
+ 
         return $atractivos;
     }
 
@@ -76,7 +71,32 @@ class AtractivoController extends Controller
 
     public function store(Request $request)
     {
-        return Atractivo::create($request->all());
+     /*    $file = $request->imagen;
+        $obj = Cloudinary::upload($file, ['folder' => 'images']);
+        $public_id = $obj->getPublicId();
+        $url = $obj->getSecurePath();
+
+
+        $fileVideo = $request->video;
+        $objVideo = Cloudinary::upload($fileVideo, ['folder' => 'videos']);
+        $urlVideo = $objVideo->getSecurePath();
+
+
+        return Atractivo::create([
+            "nombre"=>$request->nombre,
+            "codigo"=>$request->codigo,
+            "descripcion"=>$request->descripcion,
+            "imagen"=>$url,
+            "video"=>$urlVideo,
+            "acompaniantes"=>$request->acompaniantes,
+            "tipo_atractivo_id"=>$request->tipo_atractivo_id,
+            "ubicacion_id"=>$request->ubicacion_id,
+            "accesibilidad_id"=>$request->accesibilidad_id,
+            "estacionalidad_id"=>$request->estacionalidad_id,
+        ]);
+ */
+
+    return Atractivo::create($request->all()); 
     }
 
     public function show($id)
@@ -94,7 +114,7 @@ class AtractivoController extends Controller
             and atrac.ubicacion_id = ubi.id
             and atrac.estacionalidad_id = esta.id"
         )[0];
-        
+
         $actividades = DB::select(
             "SELECT a.nombre, a.descripcion, aa.estado
             FROM atractivo_actividad as aa, actividads as a
@@ -102,9 +122,6 @@ class AtractivoController extends Controller
         );
 
         $atractivo->actividades = $actividades;
-
-        $atractivo->imagen = stream_get_contents($atractivo->imagen);
-        $atractivo->video = stream_get_contents($atractivo->video);
 
         return $atractivo;
     }
@@ -317,8 +334,6 @@ class AtractivoController extends Controller
     public function getDestacadoMes()
     {
         $atractivo = DB::select("SELECT * FROM atractivos WHERE destacado_mes=true AND deleted_at IS NULL")[0];
-        $atractivo->imagen = stream_get_contents($atractivo->imagen);
-        $atractivo->video = stream_get_contents($atractivo->video);
         return $atractivo;
     }
 

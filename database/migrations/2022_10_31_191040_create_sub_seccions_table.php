@@ -17,7 +17,7 @@ class CreateSubSeccionsTable extends Migration
             $table->id();
             $table->string('nombre', 50);
             $table->string('descripcion', 50000);
-            $table->binary('foto')->nullable();
+            $table->string('foto', 200);
 /*             $table->binary('videos')->nullable(); */
   /*           $table->string('links', 100)->nullable(); */
          /*    $table->foreignId('id_seccion')->nullable()->constrained('seccions')->cascadeOnUpdate()->cascadeOnDelete(); */

@@ -7,23 +7,36 @@ use Illuminate\Http\Request;
 use App\Models\SubSeccion;
 use App\Models\Atractivo_SubSeccion;
 use Illuminate\Support\Facades\DB;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class SubSeccionController extends Controller
 {
     public function index()
     {
-        $sub_secciones = SubSeccion::select('sub_seccions.id','sub_seccions.nombre','sub_seccions.descripcion','sub_seccions.foto')->get();
-        foreach($sub_secciones as $sub_seccion) {
-            $sub_seccion -> foto = stream_get_contents($sub_seccion -> foto);
-/*             $sub_seccion -> videos = stream_get_contents($sub_seccion -> videos); */
-        }
+        $sub_secciones = SubSeccion::select('sub_seccions.id', 'sub_seccions.nombre', 'sub_seccions.descripcion', 'sub_seccions.foto')->get();
+
         return $sub_secciones;
     }
 
     public function store(Request $request)
     {
         return SubSeccion::create($request->all());
+        /*        $file = $request->foto;
+        $obj = Cloudinary::upload($file, ['folder' => 'images-seccion']);
+        $url = $obj->getSecurePath();
+
+
+        return SubSeccion::create([
+            "nombre" => $request->nombre,
+            "descripcion" => $request->descripcion,
+            "foto" => $url,
+        ]);
+ */
     }
+
+
+
+
 
     public function show($id)
     {
@@ -33,7 +46,7 @@ class SubSeccionController extends Controller
     public function update(Request $request, $id)
     {
         $sub_seccion = SubSeccion::find($id);
-        $sub_seccion -> update($request->all());
+        $sub_seccion->update($request->all());
         return $sub_seccion;
     }
 
@@ -73,7 +86,7 @@ class SubSeccionController extends Controller
         $idAtractivos = "";
         foreach ($getIdAtractivos as $idAtractivo) {
             $getIdAny = false;
-            if ($idAtractivo == end($getIdAtractivos) ) {
+            if ($idAtractivo == end($getIdAtractivos)) {
                 $idAtractivos = $idAtractivos . ' ' . $idAtractivo->atractivo_id;
             } else {
                 $idAtractivos = $idAtractivos . ' ' . $idAtractivo->atractivo_id . ',';
@@ -85,13 +98,13 @@ class SubSeccionController extends Controller
                 'msg' => 'No tiene contenido'
             ], 204);
         } else {
-            $obtenerAtractivoAsignada = DB::Select("SELECT id, nombre FROM atractivos WHERE deleted_at IS NULL AND id in(". $idAtractivos.")");
+            $obtenerAtractivoAsignada = DB::Select("SELECT id, nombre FROM atractivos WHERE deleted_at IS NULL AND id in(" . $idAtractivos . ")");
         }
         return $obtenerAtractivoAsignada;
     }
-    
 
-  
+
+
 
     public function SaveAtractivosNotAssign(Request $request)
     {
