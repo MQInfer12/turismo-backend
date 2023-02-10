@@ -20,22 +20,7 @@ class SubSeccionController extends Controller
     public function store(Request $request)
     {
         return SubSeccion::create($request->all());
-        /*        $file = $request->foto;
-        $obj = Cloudinary::upload($file, ['folder' => 'images-seccion']);
-        $url = $obj->getSecurePath();
-
-
-        return SubSeccion::create([
-            "nombre" => $request->nombre,
-            "descripcion" => $request->descripcion,
-            "foto" => $url,
-        ]);
- */
     }
-
-
-
-
 
     public function show($id)
     {
