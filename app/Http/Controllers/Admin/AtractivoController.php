@@ -10,7 +10,6 @@ use App\Models\Atractivo_Seccion;
 use App\Models\Actividad_Atractivo;
 use App\Models\Atractivo_Empresa;
 use Illuminate\Support\Facades\DB;
-use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class AtractivoController extends Controller
 {

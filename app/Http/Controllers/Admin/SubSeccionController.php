@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Models\SubSeccion;
 use App\Models\Atractivo_SubSeccion;
 use Illuminate\Support\Facades\DB;
-use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class SubSeccionController extends Controller
 {
