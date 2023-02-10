@@ -62,8 +62,12 @@ class AtractivoController extends Controller
         from atractivo_subseccion asub, atractivos atr
         where sub_seccion_id=$id and asub.atractivo_id= atr.id");
     
+        $seccion = DB::select("SELECT foto, nombre, descripcion FROM sub_seccions WHERE id='$id'")[0];
  
-        return $atractivos;
+        return [
+            "atractivos" => $atractivos,
+            "seccion" => $seccion
+        ];
     }
 
 
