@@ -39,8 +39,8 @@ class ActividadController extends Controller
 
     public function destroy($id)
     {
-        $actividad = Actividad::findOrFail($id);
-        return $actividad->forceDelete();
+        $object = Actividad::findOrFail($id);
+        return $object->forceDelete();
     }
 
     public function traer()

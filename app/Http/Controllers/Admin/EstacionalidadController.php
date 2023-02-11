@@ -45,6 +45,7 @@ class EstacionalidadController extends Controller
 
     public function destroy($id)
     {
-        return Estacionalidad::destroy($id);
+        $object = Estacionalidad::findOrFail($id);
+        return $object->forceDelete();
     }
 }

@@ -44,6 +44,7 @@ class AccesibilidadController extends Controller
 
     public function destroy($id)
     {
-        return Accesibilidad::destroy($id);
+        $object = Accesibilidad::findOrFail($id);
+        return $object->forceDelete();
     }
 }

@@ -45,6 +45,7 @@ class TipoAtractivoController extends Controller
 
     public function destroy($id)
     {
-        return TipoAtractivo::destroy($id);
+        $object = TipoAtractivo::findOrFail($id);
+        return $object->forceDelete();
     }
 }

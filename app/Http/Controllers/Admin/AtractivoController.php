@@ -15,10 +15,11 @@ class AtractivoController extends Controller
 {
     public function index()
     {
-        $atractivos =  Atractivo::join('tipo_atractivos', 'tipo_atractivos.id', '=', 'atractivos.tipo_atractivo_id')
-            ->join('ubicacions', 'ubicacions.id', '=', 'atractivos.ubicacion_id')
-            ->join('estacionalidads', 'estacionalidads.id', '=', 'atractivos.estacionalidad_id')
-            ->join('accesibilidads', 'accesibilidads.id', '=', 'atractivos.accesibilidad_id')
+        $atractivos =  
+            Atractivo::leftjoin('tipo_atractivos', 'tipo_atractivos.id', '=', 'atractivos.tipo_atractivo_id')
+            ->leftjoin('ubicacions', 'ubicacions.id', '=', 'atractivos.ubicacion_id')
+            ->leftjoin('estacionalidads', 'estacionalidads.id', '=', 'atractivos.estacionalidad_id')
+            ->leftjoin('accesibilidads', 'accesibilidads.id', '=', 'atractivos.accesibilidad_id')
             ->select(
                 'atractivos.id',
                 'atractivos.nombre',
@@ -47,10 +48,8 @@ class AtractivoController extends Controller
                 'accesibilidads.id as id_accesibilidad',
                 'accesibilidads.tipo_de_via',
                 'accesibilidads.estado_de_via',
-                /* 'accesibilidads.distancia', */
             )->get();
-        //Ingreso de imágenes y videos
-    
+
         return $atractivos;
     }
 

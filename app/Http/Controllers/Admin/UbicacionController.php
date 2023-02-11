@@ -42,6 +42,7 @@ class UbicacionController extends Controller
 
     public function destroy($id)
     {
-        return Ubicacion::destroy($id);
+        $object = Ubicacion::findOrFail($id);
+        return $object->forceDelete();
     }
 }
