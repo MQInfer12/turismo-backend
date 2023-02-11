@@ -15,6 +15,7 @@ class Atractivo extends Model
         'nombre',
         'codigo', 
         'descripcion',
+        'foto',
         'imagen',
         'video',
         'tipo_atractivo_id',

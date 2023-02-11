@@ -24,6 +24,7 @@ class AtractivoController extends Controller
                 'atractivos.nombre',
                 'atractivos.codigo',
                 'atractivos.descripcion',
+                'atractivos.foto',
                 'atractivos.imagen',
                 'atractivos.video',
                 'atractivos.destacado_mes',
@@ -57,7 +58,7 @@ class AtractivoController extends Controller
     public function showSeccionByUser($id)
     {
         $atractivos = DB::select("select 
-        asub.id, atr.id as atractivo_id,atr.nombre, atr.codigo, atr.descripcion, atr.imagen, atr.video,
+        asub.id, atr.id as atractivo_id,atr.nombre, atr.codigo, atr.descripcion, atr.imagen, atr.video, atr.foto,
         atr.acompaniantes, atr.ubicacion_id, atr.accesibilidad_id, atr.estacionalidad_id
         from atractivo_subseccion asub, atractivos atr
         where sub_seccion_id=$id and asub.atractivo_id= atr.id");
@@ -70,36 +71,9 @@ class AtractivoController extends Controller
         ];
     }
 
-
-
     public function store(Request $request)
     {
-     /*    $file = $request->imagen;
-        $obj = Cloudinary::upload($file, ['folder' => 'images']);
-        $public_id = $obj->getPublicId();
-        $url = $obj->getSecurePath();
-
-
-        $fileVideo = $request->video;
-        $objVideo = Cloudinary::upload($fileVideo, ['folder' => 'videos']);
-        $urlVideo = $objVideo->getSecurePath();
-
-
-        return Atractivo::create([
-            "nombre"=>$request->nombre,
-            "codigo"=>$request->codigo,
-            "descripcion"=>$request->descripcion,
-            "imagen"=>$url,
-            "video"=>$urlVideo,
-            "acompaniantes"=>$request->acompaniantes,
-            "tipo_atractivo_id"=>$request->tipo_atractivo_id,
-            "ubicacion_id"=>$request->ubicacion_id,
-            "accesibilidad_id"=>$request->accesibilidad_id,
-            "estacionalidad_id"=>$request->estacionalidad_id,
-        ]);
- */
-
-    return Atractivo::create($request->all()); 
+        return Atractivo::create($request->all()); 
     }
 
     public function show($id)
@@ -139,7 +113,6 @@ class AtractivoController extends Controller
     public function destroy($id)
     {
         return Atractivo::destroy($id);
-        //Añadir eliminar subsecciones
     }
 
     // ---------------Atractivo Actividad---------------------------
