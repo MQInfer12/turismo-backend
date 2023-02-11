@@ -15,7 +15,6 @@ class ActividadController extends Controller
 
     public function index()
     {
-        DB::delete("DELETE FROM actividads WHERE deleted_at IS NOT NULL");
         $actividades = DB::select("SELECT * FROM actividads WHERE deleted_at IS NULL ORDER BY id");
         return $actividades;
 
