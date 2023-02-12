@@ -336,14 +336,15 @@ class AtractivoController extends Controller
 
     public function getThreeAtractivosAvailables()
     {
-        $atractivos = Atractivo::where('destacado_mes', false)
-            ->leftjoin('estacionalidads', 'estacionalidads.id', '=', 'atractivos.estacionalidad_id')
-            ->whereNotNull('tipo_atractivo_id')
-            ->whereNotNull('accesibilidad_id')
-            ->whereNotNull('ubicacion_id')
-            ->whereNotNull('estacionalidad_id')
-            ->whereNull('horarios')
-            ->inRandomOrder()->limit(3)->get();
+        $atractivos = DB::select(
+            "SELECT a.id, a.nombre, a.foto
+            FROM atractivos as a, estacionalidads as e
+            WHERE a.destacado_mes=false AND a.tipo_atractivo_id IS NOT NULL
+            AND a.accesibilidad_id IS NOT NULL AND a.ubicacion_id IS NOT NULL
+            AND a.estacionalidad_id IS NOT NULL AND e.horarios IS NULL 
+            AND a.estacionalidad_id = e.id
+            ORDER BY RANDOM() LIMIT 3"
+        );
 
         return $atractivos;
     }
