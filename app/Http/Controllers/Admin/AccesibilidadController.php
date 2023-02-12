@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Accesibilidad;
+use App\Models\Atractivo;
 
 class AccesibilidadController extends Controller
 {
@@ -45,6 +46,13 @@ class AccesibilidadController extends Controller
     public function destroy($id)
     {
         $object = Accesibilidad::findOrFail($id);
+
+        $atractivoDestacado = Atractivo::where('accesibilidad_id', $id)->where('destacado_mes', true)->first();
+        if($atractivoDestacado) {
+            $atractivoDestacado->destacado_mes = false;
+            $atractivoDestacado->save();
+        }
+
         return $object->forceDelete();
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Atractivo;
 use App\Models\Ubicacion;
 use Illuminate\Http\Request;
 
@@ -43,6 +44,13 @@ class UbicacionController extends Controller
     public function destroy($id)
     {
         $object = Ubicacion::findOrFail($id);
+
+        $atractivoDestacado = Atractivo::where('ubicacion_id', $id)->where('destacado_mes', true)->first();
+        if($atractivoDestacado) {
+            $atractivoDestacado->destacado_mes = false;
+            $atractivoDestacado->save();
+        }
+        
         return $object->forceDelete();
     }
 }

@@ -48,7 +48,9 @@ class AtractivoController extends Controller
                 'accesibilidads.id as id_accesibilidad',
                 'accesibilidads.tipo_de_via',
                 'accesibilidads.estado_de_via',
-            )->get();
+            )
+            ->orderBy('id')
+            ->get();
 
         return $atractivos;
     }
@@ -56,11 +58,17 @@ class AtractivoController extends Controller
 
     public function showSeccionByUser($id)
     {
-        $atractivos = DB::select("select 
-        asub.id, atr.id as atractivo_id,atr.nombre, atr.codigo, atr.descripcion, atr.imagen, atr.video, atr.foto,
-        atr.acompaniantes, atr.ubicacion_id, atr.accesibilidad_id, atr.estacionalidad_id
-        from atractivo_subseccion asub, atractivos atr
-        where sub_seccion_id=$id and asub.atractivo_id= atr.id");
+        $atractivos = DB::select(
+            "SELECT 
+            asub.id, atr.id as atractivo_id,atr.nombre, atr.codigo, atr.descripcion, atr.imagen, atr.video, atr.foto,
+            atr.acompaniantes, atr.ubicacion_id, atr.accesibilidad_id, atr.estacionalidad_id
+            from atractivo_subseccion asub, atractivos atr
+            where sub_seccion_id=$id and asub.atractivo_id= atr.id
+            and atr.tipo_atractivo_id IS NOT NULL
+            and atr.accesibilidad_id IS NOT NULL
+            and atr.ubicacion_id IS NOT NULL
+            and atr.estacionalidad_id IS NOT NULL"
+        );
     
         $seccion = DB::select("SELECT foto, nombre, descripcion FROM sub_seccions WHERE id='$id'")[0];
  
@@ -78,14 +86,16 @@ class AtractivoController extends Controller
     public function show($id)
     {
         $atractivo = DB::select(
-            "SELECT atrac.id, atrac.nombre, atrac.descripcion, atrac.imagen, atrac.video,
+            "SELECT atrac.id, atrac.nombre, atrac.descripcion, atrac.imagen, atrac.video, atrac.foto,
             atrac.ubicacion_id,
             acc.tipo_de_via, acc.estado_de_via,
             ubi.distrito, ubi.calles, ubi.altitud, ubi.ubicacion_geografica,
-            esta.temporada, esta.horarios
-            from atractivos atrac,
+            esta.temporada, esta.horarios,
+            tiat.nombre as nombre_tipo_atractivo
+            from atractivos atrac, tipo_atractivos tiat,
             accesibilidads acc, ubicacions ubi, estacionalidads esta
             where atrac.id = $id
+            and atrac.tipo_atractivo_id = tiat.id
             and atrac.accesibilidad_id = acc.id
             and atrac.ubicacion_id = ubi.id
             and atrac.estacionalidad_id = esta.id"

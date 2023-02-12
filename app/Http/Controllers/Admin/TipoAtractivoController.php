@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Atractivo;
 use Illuminate\Http\Request;
 use App\Models\TipoAtractivo;
 
@@ -46,6 +47,13 @@ class TipoAtractivoController extends Controller
     public function destroy($id)
     {
         $object = TipoAtractivo::findOrFail($id);
+
+        $atractivoDestacado = Atractivo::where('tipo_atractivo_id', $id)->where('destacado_mes', true)->first();
+        if($atractivoDestacado) {
+            $atractivoDestacado->destacado_mes = false;
+            $atractivoDestacado->save();
+        }
+        
         return $object->forceDelete();
     }
 }
