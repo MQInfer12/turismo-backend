@@ -318,8 +318,10 @@ class AtractivoController extends Controller
 
     public function getDestacadoMes()
     {
-        $atractivo = DB::select("SELECT * FROM atractivos WHERE destacado_mes=true AND deleted_at IS NULL")[0];
-        return $atractivo;
+        $atractivo = DB::select("SELECT * FROM atractivos WHERE destacado_mes=true AND deleted_at IS NULL");
+        if($atractivo) {
+            return $atractivo[0];
+        }
     }
 
     public function changeDestacadoMes($id)
