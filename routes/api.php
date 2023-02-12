@@ -263,6 +263,7 @@ Route::get('/atractivo-user/{id}', [AtractivoController::class, 'showSeccionByUs
 //Cambiar atractivo destacado del mes
 Route::get('/destacar/mes/', [AtractivoController::class, 'getDestacadoMes']);
 Route::put('/destacar/mes/{id}', [AtractivoController::class, 'changeDestacadoMes']);
+Route::get('/atractivo/tres/', [AtractivoController::class, 'getThreeAtractivosAvailables']);
 
 //--------------------Relacion Atractivo_SubSeccion-----------------------//
 Route::get('/atractivo_secciones_noAsignadas/{id}', [SubSeccionController::class, 'ObtenerAtractivosNoAsignados']);

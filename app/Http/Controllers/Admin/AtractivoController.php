@@ -331,4 +331,16 @@ class AtractivoController extends Controller
             'msg' => 'Atractivo del mes actualizado correctamente.'
         ], 200);
     }
+
+    public function getThreeAtractivosAvailables()
+    {
+        $atractivos = Atractivo::where('destacado_mes', false)
+            ->whereNotNull('tipo_atractivo_id')
+            ->whereNotNull('accesibilidad_id')
+            ->whereNotNull('ubicacion_id')
+            ->whereNotNull('estacionalidad_id')
+            ->inRandomOrder()->limit(3)->get();
+
+        return $atractivos;
+    }
 }
