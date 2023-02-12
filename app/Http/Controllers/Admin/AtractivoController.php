@@ -337,10 +337,12 @@ class AtractivoController extends Controller
     public function getThreeAtractivosAvailables()
     {
         $atractivos = Atractivo::where('destacado_mes', false)
+            ->leftjoin('estacionalidads', 'estacionalidads.id', '=', 'atractivos.estacionalidad_id')
             ->whereNotNull('tipo_atractivo_id')
             ->whereNotNull('accesibilidad_id')
             ->whereNotNull('ubicacion_id')
             ->whereNotNull('estacionalidad_id')
+            ->whereNull('horarios')
             ->inRandomOrder()->limit(3)->get();
 
         return $atractivos;
