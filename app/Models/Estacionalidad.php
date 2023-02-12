@@ -12,6 +12,8 @@ class Estacionalidad extends Model
     use SoftDeletes;
     protected $fillable = [
         'temporada',
-        'horarios'
+        'horarios',
+        'hora_apertura',
+        'hora_cierre'
     ];
 }

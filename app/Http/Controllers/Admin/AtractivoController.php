@@ -90,7 +90,7 @@ class AtractivoController extends Controller
             atrac.ubicacion_id,
             acc.tipo_de_via, acc.estado_de_via,
             ubi.distrito, ubi.calles, ubi.altitud, ubi.ubicacion_geografica,
-            esta.temporada, esta.horarios,
+            esta.temporada, esta.horarios, esta.hora_apertura, esta.hora_cierre,
             tiat.nombre as nombre_tipo_atractivo
             from atractivos atrac, tipo_atractivos tiat,
             accesibilidads acc, ubicacions ubi, estacionalidads esta

@@ -13,7 +13,6 @@ class EstacionalidadController extends Controller
 
     public function index()
     {
-
         return Estacionalidad::all();
     }
 
