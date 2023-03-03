@@ -288,3 +288,4 @@ Route::post('/atractivo_empresa_noAsignados', [AtractivoController::class, 'Save
 
 Route::get('/atractivo_empresa_asignados/{id}', [AtractivoController::class, 'ObtenerEmpresasAsignadas']);
 Route::post('/atractivo_empresa_asignados', [AtractivoController::class, 'DeallocateEmpresas']);
+ 
