@@ -60,7 +60,7 @@ class AtractivoController extends Controller
     {
         $atractivos = DB::select(
             "SELECT 
-            asub.id, atr.id as atractivo_id,atr.nombre, atr.codigo, atr.descripcion, atr.imagen, atr.video, atr.foto,
+            asub.id as id_subseccion, atr.id, atr.nombre, atr.codigo, atr.descripcion, atr.imagen, atr.video, atr.foto,
             atr.acompaniantes, atr.ubicacion_id, atr.accesibilidad_id, atr.estacionalidad_id
             from atractivo_subseccion asub, atractivos atr
             where sub_seccion_id=$id and asub.atractivo_id= atr.id
@@ -344,6 +344,20 @@ class AtractivoController extends Controller
             AND a.estacionalidad_id IS NOT NULL AND e.horarios IS NULL 
             AND a.estacionalidad_id = e.id
             ORDER BY RANDOM() LIMIT 3"
+        );
+
+        return $atractivos;
+    }
+
+    public function getEventsAvailables()
+    {
+        $atractivos = DB::select(
+            "SELECT a.id, a.nombre, a.foto, a.descripcion, e.horarios as fecha
+            FROM atractivos as a, estacionalidads as e
+            WHERE a.tipo_atractivo_id IS NOT NULL
+            AND a.accesibilidad_id IS NOT NULL AND a.ubicacion_id IS NOT NULL
+            AND a.estacionalidad_id IS NOT NULL AND e.horarios IS NOT NULL 
+            AND a.estacionalidad_id = e.id"
         );
 
         return $atractivos;

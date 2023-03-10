@@ -264,6 +264,7 @@ Route::get('/atractivo-user/{id}', [AtractivoController::class, 'showSeccionByUs
 Route::get('/destacar/mes/', [AtractivoController::class, 'getDestacadoMes']);
 Route::put('/destacar/mes/{id}', [AtractivoController::class, 'changeDestacadoMes']);
 Route::get('/tres/atractivo/', [AtractivoController::class, 'getThreeAtractivosAvailables']);
+Route::get('/eventos', [AtractivoController::class, 'getEventsAvailables']);
 
 //--------------------Relacion Atractivo_SubSeccion-----------------------//
 Route::get('/atractivo_secciones_noAsignadas/{id}', [SubSeccionController::class, 'ObtenerAtractivosNoAsignados']);
