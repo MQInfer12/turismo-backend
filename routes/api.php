@@ -17,7 +17,7 @@ use App\Http\Controllers\Admin\ActividadController;
 use App\Http\Controllers\Admin\AtractivoController;
 use App\Http\Controllers\Login\UserController;
 
-
+ 
 
 //-------------------------Login-Register--------------------------------//
 Route::post('/register', [UserController::class, 'register']);
@@ -290,3 +290,5 @@ Route::post('/atractivo_empresa_noAsignados', [AtractivoController::class, 'Save
 Route::get('/atractivo_empresa_asignados/{id}', [AtractivoController::class, 'ObtenerEmpresasAsignadas']);
 Route::post('/atractivo_empresa_asignados', [AtractivoController::class, 'DeallocateEmpresas']);
  
+//-------------FILE------------//
+Route::post('/upload_file', [AtractivoController::class, 'uploadFile']);

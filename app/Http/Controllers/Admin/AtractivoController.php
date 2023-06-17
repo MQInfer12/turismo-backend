@@ -9,7 +9,9 @@ use App\Models\Seccion;
 use App\Models\Atractivo_Seccion;
 use App\Models\Actividad_Atractivo;
 use App\Models\Atractivo_Empresa;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class AtractivoController extends Controller
 {
@@ -361,5 +363,27 @@ class AtractivoController extends Controller
         );
 
         return $atractivos;
+    }
+
+    public function uploadFile(Request $request) 
+    {
+        $file = $request->file('file');
+        $randomName = $this->generateRandomString();
+        $name = $randomName.'.'.$file->extension();
+        $file->storeAs('', $name, 'public');
+
+        return response()->json([
+            "url" => App::make('url')->to('/storage/'.$name)
+        ], 201);
+    }
+
+    function generateRandomString($length = 10) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
 }
